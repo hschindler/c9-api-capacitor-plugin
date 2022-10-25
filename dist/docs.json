@@ -1,0 +1,118 @@
+{
+  "api": {
+    "name": "C9ApiCapacitorPlugin",
+    "slug": "c9apicapacitorplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "echo",
+        "signature": "(options: { value: string; }) => Promise<{ value: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ value: string; }"
+          }
+        ],
+        "returns": "Promise<{ value: string; }>",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "echo"
+      },
+      {
+        "name": "getFirmware",
+        "signature": "() => Promise<{ firmware: number[]; }>",
+        "parameters": [],
+        "returns": "Promise<{ firmware: number[]; }>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "1.0.0"
+          }
+        ],
+        "docs": "Gets RFID UHF reader firmware.",
+        "complexTypes": [],
+        "slug": "getfirmware"
+      },
+      {
+        "name": "startInventory",
+        "signature": "(options: { value: string; }) => Promise<{ uhfData: string[]; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ value: string; }"
+          }
+        ],
+        "returns": "Promise<{ uhfData: string[]; }>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "1.0.0"
+          }
+        ],
+        "docs": "Starts RFID UHF inventory.",
+        "complexTypes": [],
+        "slug": "startinventory"
+      },
+      {
+        "name": "stopInventory",
+        "signature": "() => Promise<boolean>",
+        "parameters": [],
+        "returns": "Promise<boolean>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "1.0.0"
+          }
+        ],
+        "docs": "Stops RFID UHF inventory.",
+        "complexTypes": [],
+        "slug": "stopinventory"
+      },
+      {
+        "name": "setOutputPower",
+        "signature": "(options: { value: number; }) => Promise<number>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ value: number; }"
+          }
+        ],
+        "returns": "Promise<number>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "1.0.0"
+          }
+        ],
+        "docs": "Sets RFID UHF output power.",
+        "complexTypes": [],
+        "slug": "setoutputpower"
+      },
+      {
+        "name": "scanBarcode",
+        "signature": "() => Promise<{ barcodeData: string; }>",
+        "parameters": [],
+        "returns": "Promise<{ barcodeData: string; }>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "1.0.0"
+          }
+        ],
+        "docs": "Starts scanning barcode with 1D Scanner.",
+        "complexTypes": [],
+        "slug": "scanbarcode"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [],
+  "enums": [],
+  "typeAliases": [],
+  "pluginConfigs": []
+}
