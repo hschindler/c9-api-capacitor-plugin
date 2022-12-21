@@ -16,6 +16,7 @@ import android.os.Handler;
 
 // import com.handheld.UHF.UhfManager;
 import com.android.hdhe.uhf.reader.UhfReader;
+import com.android.hdhe.uhf.readerInterface.TagModel;
 
 import android.util.Log;
 
@@ -163,6 +164,12 @@ public class C9ApiCapacitorPlugin extends Plugin {
 
             try {
                 this._uhfManager = UhfReader.getInstance();
+                // Thres.sleep ist hier wichtig!!! Sonst scannt der Scanner deutlich schlechter.
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 if (this._uhfManager != null) {
                     Log.d(TAG, "initializeUHFManager C9ApiCapacitorPlugin successful");
@@ -189,6 +196,9 @@ public class C9ApiCapacitorPlugin extends Plugin {
                 e.printStackTrace();
                 // Log.d(TAG, "Error: " + e.getMessage());
             }
+        } else {
+            _uhfManager.setOutputPower(this._outputPower);
+            _uhfManager.setWorkArea(3);
         }
     }
 
@@ -267,7 +277,7 @@ public class C9ApiCapacitorPlugin extends Plugin {
      * Inventory Thread
      */
     class InventoryThread extends Thread {
-        private List<byte[]> epcList;
+        private List<TagModel> epcList;
         private ArrayList<String> dataList;
 
         @Override
@@ -309,6 +319,25 @@ public class C9ApiCapacitorPlugin extends Plugin {
                                 // Util.play(1, 0);
                                 dataList = new ArrayList<>();
 
+                                for(TagModel tag:epcList){
+                                    if(tag != null){{
+                                        if (SelectEPC(tag.getmEpcBytes(), savedCall)) {
+                                            byte[] tid = GetTID(savedCall);
+
+                                            if (tid != null) {
+                                                String tidStr = Tools.Bytes2HexString(tid, tid.length);
+                                                dataList.add(tidStr);
+                                            }
+                                        }
+                                    }
+                                        String epcStr = Tools.Bytes2HexString(tag.getmEpcBytes(), tag.getmEpcBytes().length);
+
+                                        dataList.add(epcStr);
+
+                                    }
+                                }
+
+                                /*
                                 for (byte[] epc : epcList) {
 
                                     if (SelectEPC(epc, savedCall)) {
@@ -320,7 +349,7 @@ public class C9ApiCapacitorPlugin extends Plugin {
                                         }
                                     }
                                 }
-
+                                */
                                 if (!dataList.isEmpty()) {
                                     returnCurrentTIDs(dataList, savedCall);
                                     startFlag = false;
@@ -341,13 +370,29 @@ public class C9ApiCapacitorPlugin extends Plugin {
 
                             if (epcList != null && !epcList.isEmpty()) {
 
-                                for (byte[] epc : epcList) {
-                                    String epcStr = Tools.Bytes2HexString(epc,
-                                            epc.length);
+                                for(TagModel tag:epcList){
+                                    if(tag == null){
+                                        String epcStr = "";
+                                        dataList.add(epcStr);
+                                        //addToList(listEPC, epcStr, (byte)-1);
+                                    }else{
+                                        String epcStr = Tools.Bytes2HexString(tag.getmEpcBytes(), tag.getmEpcBytes().length);
 
-                                    dataList.add(epcStr);
+                                        dataList.add(epcStr);
+
+                                    }
+
                                 }
+                                /*
+                                for (byte[] epc : epcList) {
+                                    if (epc != null) {
+                                        String epcStr = Tools.Bytes2HexString(epc,
+                                                epc.length);
 
+                                        dataList.add(epcStr);
+                                    }
+                                }
+                                */
                                 if (!dataList.isEmpty()) {
                                     returnCurrentTIDs(dataList, savedCall);
                                     startFlag = false;
