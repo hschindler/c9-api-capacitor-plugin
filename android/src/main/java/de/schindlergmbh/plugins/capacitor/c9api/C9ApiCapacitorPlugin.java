@@ -164,7 +164,7 @@ public class C9ApiCapacitorPlugin extends Plugin {
 
             try {
                 this._uhfManager = UhfReader.getInstance();
-                // Thres.sleep ist hier wichtig!!! Sonst scannt der Scanner deutlich schlechter.
+                // Thread.sleep ist hier wichtig!!! Sonst scannt der Scanner deutlich schlechter.
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
